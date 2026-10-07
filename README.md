@@ -12,20 +12,42 @@ A minimal viable production-ready model of a Chainlink CCIP (C-Cross-Chain Inter
 
 ```text
 [Source Chain Events]
-       â”‚
-       â•¼ (Goroutines + Concurrent Heuristic Mapping)
+         |
+         v (Goroutines + Concurrent Heuristic Mapping)
 [Go CCIP Relayer & RMN Sentinel]
-       â”œâ€” Merkle Commitment Engine: Compact Inclusion Proofs
-       â”œâ‚T Public Key Cryptography: EIP;EIL-191 Secp256k1 Dual-Signatures
-       â”‚
-       â•¼ (EVM JSON-RPC)
+         |-- Merkle Commitment Engine: Compact Inclusion Proofs
+         |-- Public Key Cryptography: EIP-191 Secp256k1 Dual-Signatures
+         |
+         v (EVM JSON-RPC)
 [MiniCCIPReceiver.sol (Target Chain)]
-       â”œâ€” On-Chain Verification: Merkle Inclusion ++ Dual-Signature Recovery
-       â”â€” Active Risk Management: Token Bucket Rate Limiting
-       â””â€” Compromise Defense: Auto-Pause Circuit Breaker
-       â”‚
-       â•¼
+         |-- On-Chain Verification: Merkle Inclusion + Dual-Signature Recovery
+         |-- Active Risk Management: Token Bucket Rate Limiting
+         |-- Compromise Defense: Auto-Pause Circuit Breaker
+         |
+         v
 [Foundry Security Testbed]
-       â‘¥8 %ÐÈNˆÛÛ\›ÛZ\ÙY™[^Y\ˆ[\˜Ù\[Ûˆ
-ÜXÚX[^™Y“SˆÝÛ™Ü˜YJBˆ8¥'8 %ÐÈŽˆÚ[H[[Ý[˜Z[ˆ	ˆÚ\˜ÝZ]œ™XZÙ\ˆY[ˆ8¥#ø %ÐÈÎˆ^XÝ]YY\ÜØYÙHXÝ]™H™\^HY™[˜ÙBˆ8¥#ø %^žˆˆ›Ü\KP˜\ÙYY\šÛH›ÛÙˆ˜[ÙKTÜÚ]]™H[˜\šX[˜‚‹KKB‚ˆÈÈ]ZXÚÈÝ\‚‹H›Ý[™žB‹HÛÈ
-HKŒŒJB‚ˆÈÈÈ[ˆ[™]ËQ[™^XÝ][Û‚˜˜\Ú‹‹Ý\ÝÙL™KœÚ˜
+         |-- PoC 1: Compromised Relayer Interception (RMN Sentinel Rejection)
+         |-- PoC 2: Whale Drain & Circuit Breaker Melt (Auto-Pause)
+         |-- PoC 3: Executed Message Active Replay Defense
+         \-- Fuzz 4: Property-Based Merkle Proof False-Positive Invariant (256 runs)
+```
+
+---
+
+## Technical Highlights
+
+- Dual-Network Defense (Relayer + RIN): Two isolated signing layers. Malicious feeds rejected without RMN approval.
+- Compact Merkle Commitments: Compresses messages into a Merkle Root, verified via minimal O(log N) proofs.
+- Dynamic Rate Limiting: Token-bucket capacity auto-trips circuit breaker upon high-velocity drain.
+
+---
+
+## Quick Start
+
+- Foundry
+- Go (>= 1.21)
+
+### Run End-to-End Execution
+```bash
+./test_e2e.sh
+```
