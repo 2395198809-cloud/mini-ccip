@@ -1,7 +1,7 @@
 # Mini-CCIP: Fault-Tolerant Cross-Chain Message Verification & RMN Testbed
 
 [![Foundry](https://img.shields.io/badge/Foundry-Passing-brightgreen)](https://getfoundry.sh/)
-[![Go](https://img.shields.io/badge/Go-1.22+blue)](https://go.dev/)
+[![Go](https://img.shields.io/badge/Go-1.22-blue)](https://go.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A minimal viable production-ready model of a Chainlink CCIP (C-Cross-Chain Interoperability Protocol) node and EVM-native attack testbed. Featuring incremental Merkle Commitments, dual-network authorization (Relayer + RIMN Sentinel), and auto-melting circuit breakers.
